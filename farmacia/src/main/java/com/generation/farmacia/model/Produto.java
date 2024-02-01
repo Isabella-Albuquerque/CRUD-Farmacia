@@ -1,9 +1,11 @@
 package com.generation.farmacia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +28,10 @@ public class Produto {
 	    @NotNull(message = "O atributo preço é obrigatório!")
 	    @DecimalMin(value = "0.01", message = "O atributo preço deve ser maior que 0.00")
 	    private Double preco;
-	    
+
+	    @ManyToOne
+	    @JsonIgnoreProperties("produtos")
+	    private Categoria categoria;
 	    
 		public Long getId() {
 			return id;
@@ -52,6 +57,12 @@ public class Produto {
 			this.preco = preco;
 		}
 
-		
+		public Categoria getCategoria() {
+			return categoria;
+		}
+
+		public void setCategoria(Categoria categoria) {
+			this.categoria = categoria;
+		}
 
 	}
